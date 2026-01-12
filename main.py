@@ -1,24 +1,39 @@
-import tkinter as tk
+import customtkinter as ctk
+from src.views.main_view import MainView
 
-def saludar():
-    etiqueta.config(text="¡Hola Mundo!")
+
+def ventanaSaludo():
+    ctk.set_appearance_mode("dark")
+    ctk.set_default_color_theme("blue")
+
+    app = MainView()
+    app.mainloop()
+
+
+if __name__ == '__main__':
+    ventanaSaludo()
+
+#---
+#def saludar():
+#    etiqueta.config(text="¡Hola Mundo!")
 
 # Crear ventana principal
-ventana = tk.Tk()
-ventana.title("Mi primer programa en Tkinter")
-ventana.geometry("400x200")
+#ventana = ctk.Ctk()
+#ventana.title("Mi primer programa en Tkinter")
+#ventana.geometry("400x200")
 
 # Etiqueta
-etiqueta = tk.Label(ventana, text="Presiona el botón", font=("Arial", 12))
-etiqueta.pack(pady=20)
+#etiqueta = ctk.Label(ventana, text="Presiona el botón", font=("Arial", 12))
+#etiqueta.pack(pady=20)
 
 # Botón
-boton = tk.Button(
-    ventana,
-    text="Saludar",
-    command=saludar
-)
-boton.pack()
+#boton = ctk.Button(
+#    ventana,
+#    text="Saludar",
+#    command=saludar)
+#boton.pack()
 
 # Ejecutar la app
-ventana.mainloop()
+#ventana.mainloop()
+
+#------------
