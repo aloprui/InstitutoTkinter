@@ -1,0 +1,3 @@
+APP_NAME = "InstitutoTkinter"
+WINDOW_SIZE = "400x300"
+APP_VERSION = "1.0.0"
