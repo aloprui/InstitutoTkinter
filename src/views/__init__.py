@@ -1,5 +1,2 @@
-import customtkinter as ctk
+from .main_view import MainView
 
-app = ctk.CTk()
-app.title("Vista")
-app.geometry("300x300")
