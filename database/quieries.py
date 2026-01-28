@@ -69,3 +69,35 @@ def init_db():
             FOREIGN KEY (profesor_id) REFERENCES profesores(id),
             FOREIGN KEY (aula_id) REFERENCES aulas(id),
             FOREIGN KEY (asignatura_id) REFERENCES asignaturas(id))""")
+
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS usuarios (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                usuario TEXT UNIQUE NOT NULL,
+                password TEXT NOT NULL)""")
+
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS matriculas (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                alumno_id INTEGER NOT NULL,
+                año_academico TEXT NOT NULL,
+                UNIQUE(alumno_id, año_academico),
+                FOREIGN KEY (alumno_id) REFERENCES alumnos(persona_id))""")
+
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS convocatorias (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                nombre TEXT NOT NULL UNIQUE)""")
+
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS calificaciones (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                alumno_id INTEGER NOT NULL,
+                asignatura_id INTEGER NOT NULL,
+                convocatoria_id INTEGER NOT NULL,
+                nota REAL NOT NULL CHECK(nota >= 0 AND nota <= 10),
+                año_academico TEXT NOT NULL,
+                UNIQUE(alumno_id, asignatura_id, convocatoria_id, año_academico),
+                FOREIGN KEY (alumno_id) REFERENCES alumnos(persona_id),
+                FOREIGN KEY (asignatura_id) REFERENCES asignaturas(id),
+                FOREIGN KEY (convocatoria_id) REFERENCES convocatorias(id))""")
