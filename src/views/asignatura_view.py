@@ -1,0 +1,61 @@
+import customtkinter as ctk
+from tkinter import ttk, messagebox
+
+class AsignaturaView:
+    def __init__(self, controller):
+        self.controller = controller
+        self.root = ctk.CTk()
+        self.root.title("Asignatura Instituto")
+        self.root.geometry("800x500")
+
+        self.nombre_var = ctk.StringVar()
+        self.departamento_var = ctk.StringVar()
+
+        self.build_ui()
+
+    def build_ui(self):
+        frame = ctk.CTkFrame(self.root)
+        frame.pack(pady=10)
+
+        ctk.CTkLabel(frame, text="Nombre").grid(row=0, column=0)
+        ctk.CTkEntry(frame, textvariable=self.nombre_var).grid(row=0, column=1)
+
+        ctk.CTkLabel(frame, text="Departamento").grid(row=1, column=0)
+        ctk.CTkEntry(frame, textvariable=self.departamento_var).grid(row=1, column=1)
+
+        ctk.CTkButton(self.root, text="Crear", command=self.controller.crear_aula).grid(row=2, column=0, pady=10)
+        ctk.CTkButton(self.root, text="Actualizar", command=self.controller.actualizar_aula).grid(row=2, column=1)
+        ctk.CTkButton(self.root, text="Borrar", command=self.controller.borrar_aula).grid(row=3, column=0, columnspan=2)
+
+        self.tree = ttk.Treeview(self.root, columns=("id","nombre","departamento"), show="headings")
+        for col in self.tree["columns"]:
+            self.tree.heading(col, text=col.capitalize())
+        self.tree.pack(fill="both", expand=True, pady=10)
+
+        self.tree.bind("<<TreeviewSelect>>", self.on_select)
+
+    def on_select(self, event):
+        selected = self.tree.selection()
+        if selected:
+            values = self.tree.item(selected[0])["values"]
+            self.controller.seleccionar_asignatura(values)
+
+    def get_from_data(self):
+        self.nombre_var.get(), self.departamento_var.get()
+
+    def cargar_formulario(self, values):
+        self.nombre_var.set(values[1])
+        self.departamento_var.set(values[2])
+
+    def limpiar_formulario(self):
+        self.nombre_var.set("")
+        self.departamento_var.set("")
+
+    def mostrar_asignatura(self, asignaturas):
+        for row in self.tree.get_children():
+            self.tree.delete(row)
+        for asignatura in asignaturas:
+            self.tree.insert("", "end", values=asignatura)
+
+    def run(self):
+        self.root.mainloop()
