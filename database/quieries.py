@@ -101,3 +101,50 @@ def init_db():
                 FOREIGN KEY (alumno_id) REFERENCES alumnos(persona_id),
                 FOREIGN KEY (asignatura_id) REFERENCES asignaturas(id),
                 FOREIGN KEY (convocatoria_id) REFERENCES convocatorias(id))""")
+
+    #INSERT
+        cursor.execute("""
+                    INSERT OR IGNORE INTO usuarios (usuario, password) 
+                    VALUES ('admin', '1234')""")
+        # 1. Personas (Profe, Alumno y Director)
+        cursor.execute(
+            "INSERT OR IGNORE INTO personas (id, nombre, apellido, dni, telefono, email) VALUES (1, 'Ana', 'García', '12345678A', '600111222', 'ana@email.com')")
+        cursor.execute(
+            "INSERT OR IGNORE INTO personas (id, nombre, apellido, dni, telefono, email) VALUES (2, 'Luis', 'Pérez', '87654321B', '600333444', 'luis@email.com')")
+        cursor.execute(
+            "INSERT OR IGNORE INTO personas (id, nombre, apellido, dni, telefono, email) VALUES (3, 'Marta', 'Sánchez', '11223344C', '666777888', 'marta@email.com')")
+
+        # 2. Asignar Roles (Alumnos, Profesores, Direccion)
+        cursor.execute("INSERT OR IGNORE INTO profesores (id, persona_id, departamento) VALUES (1, 1, 'Informática')")
+        cursor.execute("INSERT OR IGNORE INTO alumnos (id, persona_id) VALUES (1, 2)")
+        cursor.execute("INSERT OR IGNORE INTO direccion (id, persona_id, cargo) VALUES (1, 3, 'Director')")
+
+        # 3. Aulas
+        cursor.execute("INSERT OR IGNORE INTO aulas (id, numero, capacidad) VALUES (1, '101', 30)")
+        cursor.execute("INSERT OR IGNORE INTO aulas (id, numero, capacidad) VALUES (2, 'LAB-1', 15)")
+
+        # 4. Asignaturas
+        cursor.execute(
+            "INSERT OR IGNORE INTO asignaturas (id, nombre, departamento) VALUES (1, 'Python', 'Informática')")
+        cursor.execute("INSERT OR IGNORE INTO asignaturas (id, nombre, departamento) VALUES (2, 'SQL', 'Informática')")
+
+        # 5. Materiales
+        cursor.execute(
+            "INSERT OR IGNORE INTO materiales (id, nombre, descripcion, aula_id) VALUES (1, 'Proyector', 'Epson 4K', 1)")
+
+        # 6. Clases
+        cursor.execute(
+            "INSERT OR IGNORE INTO clases (id, profesor_id, aula_id, asignatura_id, anio_academico) VALUES (1, 1, 1, 1, '2025-2026')")
+
+        # 7. Convocatorias (Importante para que Calificaciones no pete)
+        cursor.execute("INSERT OR IGNORE INTO convocatorias (id, nombre) VALUES (1, 'Ordinaria')")
+        cursor.execute("INSERT OR IGNORE INTO convocatorias (id, nombre) VALUES (2, 'Extraordinaria')")
+
+        # 8. Matrículas (Luis en 2025-2026)
+        cursor.execute("INSERT OR IGNORE INTO matriculas (id, alumno_id, año_academico) VALUES (1, 2, '2025-2026')")
+
+        # 9. Calificaciones (Nota para Luis en Python)
+        cursor.execute(
+            "INSERT OR IGNORE INTO calificaciones (alumno_id, asignatura_id, convocatoria_id, nota, año_academico) VALUES (2, 1, 1, 8.5, '2025-2026')")
+
+        connection.commit()  # Aseguramos que se guardan los cambios

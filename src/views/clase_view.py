@@ -33,9 +33,9 @@ class ClaseView:
         ctk.CTkLabel(frame, text="Año").grid(column=0, row=3)
         ctk.CTkEntry(frame, textvariable=self.año_var).grid(column=1, row=3)
 
-        ctk.CTkButton(self.root, text="Crear", command=self.controller.crear_aula).grid(row=4, column=0, pady=10)
-        ctk.CTkButton(self.root, text="Actualizar", command=self.controller.actualizar_aula).grid(row=4, column=1)
-        ctk.CTkButton(self.root, text="Borrar", command=self.controller.borrar_aula).grid(row=5, column=0, columnspan=2)
+        ctk.CTkButton(frame, text="Crear", command=self.controller.crear_clase).grid(row=4, column=0, pady=10)
+        ctk.CTkButton(frame, text="Actualizar", command=self.controller.actualizar_clase).grid(row=4, column=1)
+        ctk.CTkButton(frame, text="Borrar", command=self.controller.borrar_clase).grid(row=5, column=0, columnspan=2)
 
         self.tree = ttk.Treeview(self.root, columns=("id", "profesor_id", "aula_id", "asignatura_id", "año_var"), show="headings")
         for col in self.tree["columns"]:
@@ -50,7 +50,11 @@ class ClaseView:
             values = self.tree.item(selected[0])["values"]
             self.controller.seleccionar_clase(values)
 
-    def get_from_data(self, values):
+    def get_from_data(self):
+        return (self.profesor_id_var.get(), self.aula_id_var.get(),
+                self.asignatura_id_var.get(), self.año_var.get() )
+
+    def cargar_formulario(self, values):
         self.profesor_id_var.set(values[1])
         self.aula_id_var.set(values[2])
         self.asignatura_id_var.set(values[3])
@@ -67,6 +71,12 @@ class ClaseView:
             self.tree.delete(row)
         for clase in clases:
             self.tree.insert("","end", values=clase)
+
+    def show_error(self, msg):
+        messagebox.showerror("Error", msg)
+
+    def show_mensage(self, title, msg):
+        messagebox.showinfo(title, msg)
 
     def run(self):
         self.root.mainloop()

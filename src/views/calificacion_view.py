@@ -8,13 +8,13 @@ class CalificacionesView:
         self.root.title("Calificaciones Instituto")
         self.root.geometry("800x500")
 
-        self.build_ui()
-
         self.alumno_id_var = ctk.StringVar()
         self.asignatura_id_var = ctk.StringVar()
         self.convocatoria_id_var = ctk.StringVar()
         self.nota_var = ctk.StringVar()
         self.año_var = ctk.StringVar()
+
+        self.build_ui()
 
     def build_ui(self):
         frame = ctk.CTkFrame(self.root)
@@ -35,8 +35,8 @@ class CalificacionesView:
         ctk.CTkLabel(frame, text="Año Academico").grid(row = 4, column = 0)
         ctk.CTkEntry(frame, textvariable=self.año_var).grid(row = 4, column=1)
 
-        ctk.CTkButton(self.root, text="Crear", command=self.controller.crear_aula).grid(row=5, column=0, pady=10)
-        ctk.CTkButton(self.root, text="Borrar", command=self.controller.borrar_aula).grid(row=5, column=1)
+        ctk.CTkButton(frame, text="Crear", command=self.controller.crear_calificacion).grid(row=5, column=0, pady=10)
+        ctk.CTkButton(frame, text="Borrar", command=self.controller.borrar_calificacion).grid(row=5, column=1)
 
         self.tree = ttk.Treeview(self.root, columns=("id","nombre", "apellido","asignatura", "convocatoria", "nota","año"), show="headings")
         for col in self.tree["columns"]:
@@ -67,6 +67,12 @@ class CalificacionesView:
             self.tree.delete(row)
         for calificacion in calificaciones:
             self.tree.insert("","end",values=calificacion)
+
+    def show_error(self, msg):
+        messagebox.showerror("Error", msg)
+
+    def show_mensage(self, title, msg):
+        messagebox.showinfo(title, msg)
 
     def run(self):
         self.root.mainloop()

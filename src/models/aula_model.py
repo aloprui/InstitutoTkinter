@@ -9,6 +9,14 @@ class AulaModel:
             cursor.execute("""INSERT INTO aulas(numero, capacidad) VALUES (?, ?)""",(numero, capacidad))
 
     @staticmethod
+    def actualizar(aula_id, nuevo_numero, nueva_capacidad):
+        with get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("""UPDATE aulas 
+                    SET numero = ?, capacidad = ? 
+                    WHERE id = ?""", (nuevo_numero, nueva_capacidad, aula_id))
+
+    @staticmethod
     def obtener():
         with get_connection() as conn:
             cursor = conn.cursor()

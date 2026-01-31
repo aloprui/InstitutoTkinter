@@ -8,6 +8,13 @@ class MaterialModel:
             cursor.execute("""INSERT INTO materiales (nombre, descripcion, aula_id)
                             VALUES (?, ?, ?)""",(nombre,descripcion,aula_id))
 
+    @staticmethod
+    def actualizar(material_id, nombre, descripcion, aula_id):
+        with get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("""UPDATE materiales SET nombre = ?, descripcion = ?, aula_id = ? 
+                    WHERE id = ?""", (nombre, descripcion, aula_id, material_id))
+
 
     @staticmethod
     def obtener():

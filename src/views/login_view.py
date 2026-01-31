@@ -28,8 +28,11 @@ class LoginView:
     def get_credentials(self):
         return self.usuario_var.get(), self.password_var.get()
 
-    def errores(self, message):
-        messagebox.showerror("Error", message)
+    def show_error(self, mensaje):
+        messagebox.showerror("Error", mensaje)
+
+    def show_message(self, titulo, mensaje):
+        messagebox.showinfo(titulo, mensaje)
 
     def close(self):
         self.root.destroy()

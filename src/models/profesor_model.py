@@ -5,9 +5,9 @@ class ProfesorModel:
     @staticmethod
     def crear(persona_id, departamento):
         with get_connection() as conn:
-            cursor = conn.cursor()
-            cursor.execute("""INSERT INTO profesores(persona_id, departamento)
-                            VALUES(?,?)""", (persona_id, departamento))
+            conn.cursor().execute("INSERT OR IGNORE INTO profesores (persona_id, departamento) VALUES (?, ?)",
+                                  (persona_id, departamento))
+            conn.commit()
 
     @staticmethod
     def obtener():

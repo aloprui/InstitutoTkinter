@@ -3,9 +3,9 @@ class AlumnoModel:
 
     @staticmethod
     def crear(persona_id):
-        with get_connection() as connection:
-            cursor = connection.cursor()
-            cursor.execute("""INSERT INTO alumnos (persona_id) VALUES (?)""", (persona_id,))
+        with get_connection() as conn:
+            conn.cursor().execute("INSERT OR IGNORE INTO alumnos (persona_id) VALUES (?)", (persona_id,))
+            conn.commit()
 
     @staticmethod
     def obtener():

@@ -24,8 +24,8 @@ class MatriculaView:
         ctk.CTkLabel(frame, text="Año Academico").grid(row = 1, column = 0)
         ctk.CTkEntry(frame, textvariable=self.año_var).grid(row = 1, column=1)
 
-        ctk.CTkButton(self.root, text="Crear", command=self.controller.crear_aula).grid(row=2, column=0, pady=10)
-        ctk.CTkButton(self.root, text="Borrar", command=self.controller.borrar_aula).grid(row=2, column=1)
+        ctk.CTkButton(frame, text="Crear", command=self.controller.crear_matricula).grid(row=2, column=0, pady=10)
+        ctk.CTkButton(frame, text="Borrar", command=self.controller.borrar_matricula).grid(row=2, column=1)
 
         self.tree = ttk.Treeview(self.root, columns=("id","nombre","apellido","año_academico"), show="headings")
         for col in self.tree["columns"]:
@@ -52,6 +52,12 @@ class MatriculaView:
             self.tree.delete(row)
         for matricula in matriculas:
             self.tree.insert("", "end", values=matricula)
+
+    def show_error(self, msg):
+        messagebox.showerror("Error", msg)
+
+    def show_mensage(self, title, msg):
+        messagebox.showinfo(title, msg)
 
     def run(self):
         self.root.mainloop()

@@ -28,5 +28,6 @@ class PersonaModel:
     def obtener_todas():
         with get_connection() as connection:
             cursor = connection.cursor()
-            cursor.execute("""SELECT * FROM personas""")
+            cursor.execute("""SELECT id, nombre, apellido, dni, telefono, email 
+                FROM personas""")
             return cursor.fetchall()

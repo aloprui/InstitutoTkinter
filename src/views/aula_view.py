@@ -23,9 +23,9 @@ class AulaView():
         ctk.CTkLabel(frame, text="Capacidad").grid(row = 1, column = 0)
         ctk.CTkEntry(frame, textvariable = self.capacidad_var).grid(row = 1, column=1)
 
-        ctk.CTkButton(self.root, text="Crear", command=self.controller.crear_aula).grid(row = 2, column = 0, pady=10)
-        ctk.CTkButton(self.root, text="Actualizar", command=self.controller.actualizar_aula).grid(row = 2, column = 1)
-        ctk.CTkButton(self.root, text="Borrar", command=self.controller.borrar_aula).grid(row = 3, column = 2, columnspan=2)
+        ctk.CTkButton(frame, text="Crear", command=self.controller.crear_aula).grid(row=2, column=0, pady=10, padx=5)
+        ctk.CTkButton(frame, text="Actualizar", command=self.controller.actualizar_aula).grid(row=2, column=1, pady=10,padx=5)
+        ctk.CTkButton(frame, text="Borrar", command=self.controller.borrar_aula).grid(row=3, column=0, columnspan=2,pady=5)
 
         self.tree = ttk.Treeview(self.root, columns=("id","numero","capacidad"), show="headings")
         for col in self.tree["columns"]:
@@ -56,6 +56,12 @@ class AulaView():
             self.tree.delete(row)
         for aula in aulas:
             self.tree.insert("","end", values=aula)
+
+    def show_error(self, msg):
+        messagebox.showerror("Error", msg)
+
+    def show_mensage(self, title, msg):
+        messagebox.showinfo(title, msg)
 
     def run(self):
         self.root.mainloop()

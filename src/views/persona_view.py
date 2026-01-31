@@ -16,35 +16,42 @@ class PersonaView():
 
         self.build_ui()
 
-
     def build_ui(self):
         frame_for = ctk.CTkFrame(self.root)
         frame_for.pack(pady=10)
 
+        # Entradas de texto
         ctk.CTkLabel(frame_for, text="Nombre").grid(row=0, column=0)
         ctk.CTkEntry(frame_for, textvariable=self.nombre_var).grid(row=0, column=1)
-
         ctk.CTkLabel(frame_for, text="Apellido").grid(row=1, column=0)
         ctk.CTkEntry(frame_for, textvariable=self.apellido_var).grid(row=1, column=1)
-
         ctk.CTkLabel(frame_for, text="DNI").grid(row=2, column=0)
         ctk.CTkEntry(frame_for, textvariable=self.dni_var).grid(row=2, column=1)
-
         ctk.CTkLabel(frame_for, text="Telefono").grid(row=3, column=0)
         ctk.CTkEntry(frame_for, textvariable=self.telefono_var).grid(row=3, column=1)
-
         ctk.CTkLabel(frame_for, text="Email").grid(row=4, column=0)
         ctk.CTkEntry(frame_for, textvariable=self.email_var).grid(row=4, column=1)
 
+        # Botones de gestión básica
         ctk.CTkButton(frame_for, text="Crear", command=self.controller.crear_persona).grid(row=5, column=0, pady=10)
         ctk.CTkButton(frame_for, text="Actualizar", command=self.controller.actualizar_persona).grid(row=5, column=1)
         ctk.CTkButton(frame_for, text="Borrar", command=self.controller.borrar_persona).grid(row=5, column=2, pady=5)
 
-        self.tree = ttk.Treeview(self.root,columns=("id","nombre","apellido","dni","telefono","email"), show="headings")
+        # SECCIÓN DE ROLES (Punto 1.a, 1.b, 1.c del enunciado)
+        ctk.CTkLabel(frame_for, text="Asignar Rol:", font=("Arial", 12, "bold")).grid(row=6, column=1, pady=10)
+
+        ctk.CTkButton(frame_for, text="+ Alumno", fg_color="#2ecc71", hover_color="#27ae60",
+                      command=self.controller.hacer_alumno).grid(row=7, column=0, padx=5)
+        ctk.CTkButton(frame_for, text="+ Profesor", fg_color="#e67e22", hover_color="#d35400",
+                      command=self.controller.hacer_profesor).grid(row=7, column=1, padx=5)
+        ctk.CTkButton(frame_for, text="+ Directivo", fg_color="#9b59b6", hover_color="#8e44ad",
+                      command=self.controller.hacer_directivo).grid(row=7, column=2, padx=5)
+
+        # Tabla Treeview
+        self.tree = ttk.Treeview(self.root, columns=("id","nombre","apellido","dni","telefono","email"), show="headings")
         for col in self.tree["columns"]:
             self.tree.heading(col, text=col.capitalize())
         self.tree.pack(fill="both", expand=True, pady=10)
-
         self.tree.bind("<<TreeviewSelect>>", self.on_select)
 
     def on_select(self,event):
@@ -71,11 +78,18 @@ class PersonaView():
         self.telefono_var.set("")
         self.email_var.set("")
 
+
     def mostrar_persona(self, personas):
         for row in self.tree.get_children():
             self.tree.delete(row)
         for persona in personas:
             self.tree.insert("", "end", values=persona)
+
+    def show_error(self, msg):
+        messagebox.showerror("Error", msg)
+
+    def show_mensage(self, title, msg):
+        messagebox.showinfo(title, msg)
 
     def run(self):
         self.root.mainloop()

@@ -23,9 +23,9 @@ class AsignaturaView:
         ctk.CTkLabel(frame, text="Departamento").grid(row=1, column=0)
         ctk.CTkEntry(frame, textvariable=self.departamento_var).grid(row=1, column=1)
 
-        ctk.CTkButton(self.root, text="Crear", command=self.controller.crear_aula).grid(row=2, column=0, pady=10)
-        ctk.CTkButton(self.root, text="Actualizar", command=self.controller.actualizar_aula).grid(row=2, column=1)
-        ctk.CTkButton(self.root, text="Borrar", command=self.controller.borrar_aula).grid(row=3, column=0, columnspan=2)
+        ctk.CTkButton(frame, text="Crear", command=self.controller.crear_asignatura).grid(row=2, column=0, pady=10)
+        ctk.CTkButton(frame, text="Actualizar", command=self.controller.actualizar_asignatura).grid(row=2, column=1)
+        ctk.CTkButton(frame, text="Borrar", command=self.controller.borrar_asignatura).grid(row=3, column=0, columnspan=2)
 
         self.tree = ttk.Treeview(self.root, columns=("id","nombre","departamento"), show="headings")
         for col in self.tree["columns"]:
@@ -56,6 +56,12 @@ class AsignaturaView:
             self.tree.delete(row)
         for asignatura in asignaturas:
             self.tree.insert("", "end", values=asignatura)
+
+    def show_error(self, msg):
+        messagebox.showerror("Error", msg)
+
+    def show_mensage(self, title, msg):
+        messagebox.showinfo(title, msg)
 
     def run(self):
         self.root.mainloop()

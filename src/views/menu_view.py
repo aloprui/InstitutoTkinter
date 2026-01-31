@@ -10,7 +10,7 @@ class MenuView:
         self.build_ui()
 
     def build_ui(self):
-        ctk.CTkLabel(self.root, text="Bienbenido", font=("Verdana", 24)).pack(pady=20)
+        ctk.CTkLabel(self.root, text="Bienvenido", font=("Verdana", 24)).pack(pady=20)
 
         ctk.CTkLabel(self.root, text="Menu Instituto", font=("Verdana", 18)).pack(pady=20)
 

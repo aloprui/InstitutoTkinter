@@ -12,11 +12,19 @@ class ClaseModel:
                """, (profesor_id, aula_id, asignatura_id, anio_academico))
 
     @staticmethod
+    def actualizar(clase_id, profesor_id, aula_id, asignatura_id, anio_academico):
+        with get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("""UPDATE clases 
+                    SET profesor_id = ?, aula_id = ?, asignatura_id = ?, anio_academico = ? 
+                    WHERE id = ?""", (profesor_id, aula_id, asignatura_id, anio_academico, clase_id))
+
+    @staticmethod
     def obtener():
         with get_connection() as conn:
             cursor = conn.cursor()
             cursor.execute("""
-                   SELECT clases.id, personas.nombre, personas.apellidos,
+                   SELECT clases.id, personas.nombre, personas.apellido,
                           asignaturas.nombre, aulas.numero, clases.anio_academico
                    FROM clases
                    JOIN profesores ON clases.profesor_id = profesores.id
