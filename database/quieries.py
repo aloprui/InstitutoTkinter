@@ -16,8 +16,8 @@ def init_db():
             nombre TEXT NOT NULL,
             apellido TEXT NOT NULL,
             dni TEXT NOT NULL,
-            telefono TEXT,
-            email TEXT)""")
+            telefono TEXT NOT NULL,
+            email TEXT UNIQUE NOT NULL)""")
 
         cursor.execute("""
         CREATE TABLE IF NOT EXISTS alumnos (

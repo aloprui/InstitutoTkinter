@@ -7,6 +7,7 @@ class PersonaModel:
             cursor = connection.cursor()
             cursor.execute("""INSERT INTO personas(nombre, apellido, dni, telefono,email)
                             VALUES(?,?,?,?,?)""",(nombre, apellido, dni, telefono, email))
+
             return cursor.lastrowid
 
     @staticmethod

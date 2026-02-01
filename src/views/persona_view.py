@@ -37,7 +37,7 @@ class PersonaView():
         ctk.CTkButton(frame_for, text="Actualizar", command=self.controller.actualizar_persona).grid(row=5, column=1)
         ctk.CTkButton(frame_for, text="Borrar", command=self.controller.borrar_persona).grid(row=5, column=2, pady=5)
 
-        # SECCIÓN DE ROLES (Punto 1.a, 1.b, 1.c del enunciado)
+        # SECCIÓN DE ROLES
         ctk.CTkLabel(frame_for, text="Asignar Rol:", font=("Arial", 12, "bold")).grid(row=6, column=1, pady=10)
 
         ctk.CTkButton(frame_for, text="+ Alumno", fg_color="#2ecc71", hover_color="#27ae60",
